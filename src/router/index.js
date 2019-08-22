@@ -56,98 +56,110 @@ export const constantRoutes = [
   },
 
   {
-    path: '/example',
+    path: '/Api',
     component: Layout,
-    redirect: '/example/table',
+    redirect: '/Api/table',
     name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    meta: { title: 'Api管理', icon: 'example' },
     children: [
       {
         path: 'table',
         name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        component: () => import('@/views/mytable/index2'),
+        meta: { title: 'Api列表', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
+        path: 'getCase',
+        name: 'getCase',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        meta: { title: 'Case列表', icon: 'tree' }
       }
     ]
   },
 
   {
-    path: '/form',
+    path: '/',
+    component: Layout,
+    redirect: '/testsuite',
+    children: [{
+      path: 'testsuite',
+      name: 'testsuite',
+      component: () => import('@/views/testsuite/suite'),
+      meta: { title: 'TestSuite', icon: 'dashboard' }
+    },
+    {
+      path: 'suiteDetail',
+      name: 'suiteDetail',
+      component: () => import('@/views/testsuite/detail'),
+      hidden: true
+    }
+    ]
+  },
+
+  // caseStep
+  {
+    path: '/step',
+    component: Layout,
+    children: [
+      {
+        path: 'get',
+        name: 'StepDetail',
+        component: () => import('@/views/casestep/stepDetail4'),
+        hidden: true
+      }
+    ]
+  },
+
+  {
+    path: '/mutable',
     component: Layout,
     children: [
       {
         path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        name: 'mutable',
+        component: () => import('@/views/mytable/index2'),
+        meta: { title: 'Api列表', icon: 'form' }
       }
     ]
   },
 
   {
-    path: '/nested',
+    path: '/test',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
+        path: 'index',
+        name: 'test',
+        component: () => import('@/views/casestep/stepDetail'),
+        meta: { title: 'test', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/report',
+    component: Layout,
+    children: [
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
+        path: 'index',
+        name: 'report',
+        component: () => import('@/views/httprunner/DebugReport'),
+        meta: { title: 'report', icon: 'form' }
       }
     ]
   },
 
+  {
+    path: '/debug',
+    component: Layout,
+    children: [
+      {
+        path: 'debug',
+        name: 'debug',
+        component: () => import('@/views/debug/debug3'),
+        meta: { title: 'debug', icon: 'form' }
+      }
+    ]
+  },
   {
     path: 'external-link',
     component: Layout,

@@ -3,11 +3,23 @@
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb class="breadcrumb-container" />
-
     <div class="right-menu">
+      <template v-if="device!=='mobile'">
+        <el-dropdown type="primary" small @command="switchHost">
+          <span class="el-dropdown-link">
+            <el-button type="primary" size="mini">
+              SwitchHost<i class="el-icon-arrow-down el-icon--right" />
+            </el-button>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="127.0.0.1:0000">环境1</el-dropdown-item>
+            <el-dropdown-item command="192.168.56.1:0000">环境2</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </template>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img src="@/assets/avatar/header.jpg" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -16,12 +28,6 @@
               Home
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">Log Out</span>
           </el-dropdown-item>
@@ -41,6 +47,12 @@ export default {
     Breadcrumb,
     Hamburger
   },
+  data() {
+    return {
+      host: '',
+      device: ''
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar',
@@ -50,6 +62,15 @@ export default {
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
+    },
+    // host切换
+    switchHost(hostData) {
+      this.$store.dispatch('host/changeHostByAyn1', hostData)
+      console.log(this.$store.getters.host)
+      this.$message({
+        message: 'Switch Host:' + hostData,
+        type: 'success'
+      })
     },
     async logout() {
       await this.$store.dispatch('user/logout')

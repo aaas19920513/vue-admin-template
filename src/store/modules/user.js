@@ -26,8 +26,9 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
+        const data = response
         commit('SET_TOKEN', data.token)
+        // 将token存到cookie
         setToken(data.token)
         resolve()
       }).catch(error => {
@@ -40,15 +41,14 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        const { data } = response
-
+        const data = response
         if (!data) {
           reject('Verification failed, please Login again.')
         }
+        /* 等同于const username = data.username; const avatar=data.avatar */
+        const { username, avatar } = data
 
-        const { name, avatar } = data
-
-        commit('SET_NAME', name)
+        commit('SET_NAME', username)
         commit('SET_AVATAR', avatar)
         resolve(data)
       }).catch(error => {

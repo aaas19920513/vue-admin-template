@@ -16,13 +16,10 @@ router.beforeEach(async(to, from, next) => {
 
   // set page title
   document.title = getPageTitle(to.meta.title)
-
   // determine whether the user has logged in
   const hasToken = getToken()
-
   if (hasToken) {
     if (to.path === '/login') {
-      // if is logged in, redirect to the home page
       next({ path: '/' })
       NProgress.done()
     } else {
@@ -44,9 +41,26 @@ router.beforeEach(async(to, from, next) => {
         }
       }
     }
+    var flag = false
+    if (to.path === '/step/get') {
+      flag = true
+      next()
+    } else {
+      if (flag) {
+        this.$confirm('您确定要退出此页面?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          next()
+          flag = false
+        })
+      } else {
+        next()
+      }
+    }
   } else {
     /* has no token*/
-
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next()

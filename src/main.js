@@ -39,3 +39,7 @@ new Vue({
   store,
   render: h => h(App)
 })
+
+Vue.filter('getYMD', function(input) {
+  return input.split(' ')[0]
+})
